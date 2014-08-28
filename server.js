@@ -20,19 +20,19 @@ var Item       = require('./app/models/item');
 // ROUTES FOR OUR API
 // =============================================================================
 
-var router = express.Router();
+var apiRouter = express.Router();
 
-router.use(function(req, res, next) {
+apiRouter.use(function(req, res, next) {
 	console.log('Something is happening.');
 	next();
 });
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
+apiRouter.get('/', function(req, res) {
 	res.status(200).json({ status: 'OK' });	
 });
 
-router.route('/items')
+apiRouter.route('/items')
 	.post(function(req, res) {
 		var item = new Item();
 		item._id = uuid.v4();
@@ -59,7 +59,7 @@ router.route('/items')
 		});
 	});
 
-router.route('/items/:item_id')
+apiRouter.route('/items/:item_id')
 	// update
 	.put(function(req, res) {
 		Item.findById(req.params.item_id, function(err, item) {
@@ -98,7 +98,8 @@ router.route('/items/:item_id')
 
 
 // REGISTER OUR ROUTES -------------------------------
-app.use('/api', router);
+app.use('/api', apiRouter);
+app.use(express.static(__dirname + '/client'));
 
 // START THE SERVER
 // =============================================================================

@@ -55,7 +55,7 @@ apiRouter.route('/items')
 			if (err)
 				res.send(err);
 
-			res.json(items);
+			res.json({ data: items });
 		});
 	});
 

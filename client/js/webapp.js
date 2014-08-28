@@ -1,5 +1,5 @@
 angular.module('todo-webapp', ['todo-api'])
-	.controller('main', ['$scope', 'apiMock', function ($scope, api) {
+	.controller('main', ['$scope', 'api', function ($scope, api) {
 		var emptyItem = {
 			_id: null,
 			finished: false,

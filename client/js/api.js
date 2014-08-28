@@ -81,3 +81,31 @@ angular.module('todo-api', [])
 			deleteItem: deleteItem
 		};
 	});
+
+angular.module('todo-api')
+	.factory('api', function ($http) {
+		var url = "";
+
+		var getItems = function () {
+			return $http.get(url + '/api/items');
+		};
+
+		var createItem = function (item) {
+			return $http.post(url + '/api/items', item);
+		};
+
+		var updateItem = function (item) {
+			return $http.put(url + '/api/item/' + item._id, item);
+		};
+
+		var deleteItem = function (id) {
+			return $http.delete(url + '/api/items/' + id);
+		};
+
+		return {
+			getItems: getItems,
+			createItem: createItem,
+			updateItem: updateItem,
+			deleteItem: deleteItem
+		};
+	});

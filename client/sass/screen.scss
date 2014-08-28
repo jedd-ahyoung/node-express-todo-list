@@ -27,6 +27,31 @@ button {
 		padding: 5px;
 		background: #fff;
 
+		// Angular animations.
+		&.ng-enter {
+			opacity: 0;
+			transform: scale(0);
+			transition: .2s linear all;
+		}
+
+		&.ng-enter-active {
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		&.ng-leave {
+			opacity: 1;
+			max-height: 100px;
+			transform: scale(1);
+			transition: .2s linear all;
+		}
+
+		&.ng-leave-active {
+			opacity: 0;
+			max-height: 0;
+			transform: scale(0);
+		}
+
 		&.finished {
 			background: #efe;
 

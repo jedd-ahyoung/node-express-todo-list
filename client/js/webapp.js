@@ -1,4 +1,4 @@
-angular.module('todo-webapp', ['todo-api'])
+angular.module('todo-webapp', ['todo-api', 'ngAnimate'])
 	.controller('main', ['$scope', 'api', function ($scope, api) {
 		var emptyItem = {
 			_id: null,

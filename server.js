@@ -32,11 +32,9 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-	res.status(200);	
+	res.status(200).json({ status: 'OK' });	
 });
 
-// on routes that end in /birds
-// ----------------------------------------------------
 router.route('/items')
 	.post(function(req, res) {
 		

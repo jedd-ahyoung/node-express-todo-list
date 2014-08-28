@@ -11,21 +11,18 @@ var uuid       = require('node-uuid');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-var port     = process.env.PORT || 8080; // set our port
+var port       = process.env.PORT || 8080; // set our port
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://jedd:pass7531@kahana.mongohq.com:10094/jedd_staging'); // connect to our database
-var Item     = require('./app/models/item');
+var Item       = require('./app/models/item');
 
 // ROUTES FOR OUR API
 // =============================================================================
 
-// create our router
 var router = express.Router();
 
-// middleware to use for all requests
 router.use(function(req, res, next) {
-	// do logging
 	console.log('Something is happening.');
 	next();
 });
@@ -37,8 +34,7 @@ router.get('/', function(req, res) {
 
 router.route('/items')
 	.post(function(req, res) {
-		
-		var item = new Item();		// create a new instance of the Bird model
+		var item = new Item();
 		item._id = uuid.v4();
 		item.finished = req.body.finished || false;
 		item.archived = req.body.archived || false;
@@ -52,8 +48,6 @@ router.route('/items')
 
 			res.status(200).json({ data: item }); // TODO: Maybe better to get the data from db.
 		});
-
-		
 	})
 
 	.get(function(req, res) {

@@ -11,7 +11,7 @@
 <body data-ng-controller="main">
 	<ul>
 		<li data-ng-repeat="item in items">
-			<button data-ng-click="finish(item._id)">Mark as Finished</button>
+			<button data-ng-click="finish(item)">Mark as {{item.finished ? "Unfinished" : "Finished"}}</button>
 			<span>{{item.entry}}</span>
 			<button data-ng-click="delete(item._id)">Delete</button>
 		</li>

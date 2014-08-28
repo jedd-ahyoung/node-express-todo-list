@@ -28,8 +28,8 @@ angular.module('todo-api', [])
 			var deferred = $q.defer();
 			deferred.resolve({
 				data: [
-					{ _id: 1, entry: "One", archived: false, finished: false }
-					, { _id: 2, entry: "Two", archived: false, finished: false }
+					{ _id: 1, entry: "One", archived: false, finished: true }
+					, { _id: 2, entry: "Two", archived: false, finished: true }
 					, { _id: 3, entry: "Three", archived: false, finished: false }
 					, { _id: 4, entry: "Four", archived: false, finished: false }
 				]
@@ -56,6 +56,15 @@ angular.module('todo-api', [])
 			return addHttpMethods(deferred.promise);
 		};
 
+		var updateItem = function (item) {
+			var deferred = $q.defer();
+			deferred.resolve({
+				data: item
+			});
+
+			return addHttpMethods(deferred.promise);
+		};
+
 		var deleteItem = function (id) {
 			var deferred = $q.defer();
 			deferred.resolve({
@@ -68,6 +77,7 @@ angular.module('todo-api', [])
 		return {
 			getItems: getItems,
 			createItem: createItem,
+			updateItem: updateItem,
 			deleteItem: deleteItem
 		};
 	});

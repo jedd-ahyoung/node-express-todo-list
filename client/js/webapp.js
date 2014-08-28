@@ -23,8 +23,17 @@ angular.module('todo-webapp', ['todo-api'])
 				});
 		};
 
-		$scope.finish = function (id) {
-			console.log("Finished ", id);
+		$scope.finish = function (item) {
+			console.log("Finished ", item._id);
+			item.finished = !item.finished;
+
+			api.updateItem(item)
+				.success(function (result) {
+
+				})
+				.error(function (error) {
+					console.log("Oh dang.", error);
+				});				
 		};
 
 		$scope.delete = function (id) {

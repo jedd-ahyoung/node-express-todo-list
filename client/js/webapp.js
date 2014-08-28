@@ -10,9 +10,17 @@ angular.module('todo-webapp', ['todo-api'])
 		$scope.newItem = angular.copy(emptyItem);
 
 		$scope.add = function () {
-			$scope.items.push(angular.copy($scope.newItem));
-			$scope.newItem = angular.copy(emptyItem);
-			console.log("Added!");
+			if (!$scope.newItem.entry) return; // TODO: Fix this.
+
+			api.createItem($scope.newItem)
+				.success(function (result) {
+					$scope.items.push(result.data);
+					$scope.newItem = angular.copy(emptyItem);
+					console.log("Added!");
+				})
+				.error(function (error) {
+					console.log("Oh dang.", error);
+				});
 		};
 
 		$scope.finish = function (id) {
@@ -21,11 +29,23 @@ angular.module('todo-webapp', ['todo-api'])
 
 		$scope.delete = function (id) {
 			console.log("Deleted ", id);
+
+			api.deleteItem(id)
+				.success(function (result) {
+					// filter the item out of our array.
+					console.log(result);
+					$scope.items = $scope.items.filter(function (elm) {
+						return elm._id !== result.data;
+					});
+				})
+				.error(function (error) {
+					console.log("Oh dang.", error);
+				});
 		}
 
 		api.getItems()
 			.success(function (result) {
-				$scope.items = result;
+				$scope.items = result.data;
 			})
 			.error(function (error) {
 				console.log("Uh-oh.", error);

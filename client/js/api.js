@@ -22,21 +22,52 @@ angular.module('todo-api', [])
 			return promise;
 		}
 
+		var nextid = 5;
+
 		var getItems = function () {
 			var deferred = $q.defer();
-			deferred.resolve([
-				{ _id: 1, entry: "One", archived: false, finished: false }
-				, { _id: 2, entry: "Two", archived: false, finished: false }
-				, { _id: 3, entry: "Three", archived: false, finished: false }
-				, { _id: 4, entry: "Four", archived: false, finished: false }
-			]);
+			deferred.resolve({
+				data: [
+					{ _id: 1, entry: "One", archived: false, finished: false }
+					, { _id: 2, entry: "Two", archived: false, finished: false }
+					, { _id: 3, entry: "Three", archived: false, finished: false }
+					, { _id: 4, entry: "Four", archived: false, finished: false }
+				]
+			});
 
 			return addHttpMethods(deferred.promise);
 		};
 
+		var createItem = function (item) {
+			var deferred = $q.defer();
+			deferred.resolve({
+				data: {
+					_id: nextid,
+					entry: item.entry,
+					archived: false,
+					finished: false,
+					created: new Date(),
+					updated: new Date()
+				}
+			});
 
+			nextid++;
+
+			return addHttpMethods(deferred.promise);
+		};
+
+		var deleteItem = function (id) {
+			var deferred = $q.defer();
+			deferred.resolve({
+				data: id
+			});
+
+			return addHttpMethods(deferred.promise);
+		};
 
 		return {
-			getItems: getItems
+			getItems: getItems,
+			createItem: createItem,
+			deleteItem: deleteItem
 		};
 	});

@@ -25,4 +25,8 @@ build/Release
 node_modules
 
 # Bower dependencies.
-client/lib
+client/lib/
+
+# Ignore sass stuff.
+*.sass-cache
+client/css/

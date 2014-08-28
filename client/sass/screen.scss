@@ -4,3 +4,62 @@
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "compass/reset";
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: #ddd;
+	margin: 15px;
+}
+
+button {
+	padding: 10px;
+}
+
+.list {
+	width: 100%;
+	margin-bottom: 100px;
+
+	li {
+		margin: 5px;
+		padding: 5px;
+		background: #fff;
+
+		&.finished {
+			background: #efe;
+
+			.text {
+				text-decoration: line-through;
+			}
+		}
+
+		.finish {
+
+		}
+
+		.delete {
+			float: right;
+		}
+	}
+}
+
+.form {
+	display: block;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	input[type="text"] {
+		width: 100%;
+		margin: 0;
+		padding: 15px;
+	}
+
+	button[type="submit"] {
+		width: 100%;
+		margin: 0;
+	}
+}

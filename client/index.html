@@ -9,17 +9,21 @@
 	<script type="text/javascript" src="js/webapp.js"></script>
 </head>
 <body data-ng-controller="main">
-	<ul>
-		<li data-ng-repeat="item in items">
-			<button data-ng-click="finish(item)">Mark as {{item.finished ? "Unfinished" : "Finished"}}</button>
-			<span>{{item.entry}}</span>
-			<button data-ng-click="delete(item._id)">Delete</button>
+	<ul class="list">
+		<li data-ng-repeat="item in items" data-ng-class="{ finished: item.finished }">
+			<button class="finish" data-ng-click="finish(item)">Mark as {{item.finished ? "Unfinished" : "Finished"}}</button>
+			<span class="text">{{item.entry}}</span>
+			<button class="delete" data-ng-click="delete(item._id)">Delete</button>
 		</li>
 	</ul>
 	<br />
-	<form data-ng-submit="add()"> 
-		<input data-ng-model="newItem.entry" type="text" />
-		<input type="submit" value="Add" />
+	<form class="form" data-ng-submit="add()">
+		<div>
+			<input data-ng-model="newItem.entry" type="text" />
+		</div>
+		<div>
+			<button type="submit">Add</button>
+		</div>
 	</form>
 </body>
 </html>

@@ -95,7 +95,7 @@ angular.module('todo-api')
 		};
 
 		var updateItem = function (item) {
-			return $http.put(url + '/api/item/' + item._id, item);
+			return $http.put(url + '/api/items/' + item._id, item);
 		};
 
 		var deleteItem = function (id) {

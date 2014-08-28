@@ -10,6 +10,9 @@
 	<script type="text/javascript" src="js/webapp.js"></script>
 </head>
 <body data-ng-controller="main">
+	<div class="noitems" data-ng-hide="items.length">
+		<span>You have no items in your list. Add an item below.</span>
+	</div>
 	<ul class="list">
 		<li data-ng-repeat="item in items" data-ng-class="{ finished: item.finished }">
 			<button class="finish" data-ng-click="finish(item)">Mark as {{item.finished ? "Unfinished" : "Finished"}}</button>

@@ -51,7 +51,6 @@ router.route('/items')
 	})
 
 	.get(function(req, res) {
-		console.log(req.query);
 		Item.find(req.query.archived ? null : { archived: false }, function(err, items) {
 			if (err)
 				res.send(err);
@@ -60,48 +59,42 @@ router.route('/items')
 		});
 	});
 
-// on routes that end in /birds/:bird_id
-// ----------------------------------------------------
-//router.route('/birds/:bird_id')
-//
-//	// get the bird with that id
-//	.get(function(req, res) {
-//		Bird.findById(req.params.bird_id, function(err, bird) {
-//			if (err)
-//				res.send(err);
-//			res.json(bird);
-//		});
-//	})
-//
-//	// update the bird with this id
-//	.put(function(req, res) {
-//		Bird.findById(req.params.bird_id, function(err, bird) {
-//
-//			if (err)
-//				res.send(err);
-//
-//			bird.name = req.body.name;
-//			bird.save(function(err) {
-//				if (err)
-//					res.send(err);
-//
-//				res.json({ message: 'Bird updated!' });
-//			});
-//
-//		});
-//	})
-//
-//	// delete the bird with this id
-//	.delete(function(req, res) {
-//		Bird.remove({
-//			_id: req.params.bird_id
-//		}, function(err, bird) {
-//			if (err)
-//				res.send(err);
-//
-//			res.json({ message: 'Successfully deleted' });
-//		});
-//	});
+router.route('/items/:item_id')
+	// update
+	.put(function(req, res) {
+		Item.findById(req.params.item_id, function(err, item) {
+			if (err)
+				res.status(500).send(err);
+
+			item.finished = req.body.finished || false;
+			item.updated = new Date();
+			item.entry = req.body.entry || item.entry;
+
+			item.save(function(err) {
+				if (err)
+					res.status(500).send(err);
+
+				res.json({ data: item });
+			});
+		});
+	})
+
+	// archive.
+	.delete(function(req, res) {
+		Item.findById(req.params.item_id, function(err, item) {
+			if (err)
+				res.status(500).send(err);
+
+			item.archived = true;
+
+			item.save(function(err) {
+				if (err)
+					res.status(500).send(err);
+
+				res.json({ data: item._id });
+			})
+		});
+	});
 
 
 // REGISTER OUR ROUTES -------------------------------

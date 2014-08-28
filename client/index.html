@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app="todo-webapp">
 <head>
 	<title>ExpressJS TODO App</title>
 
 	<link rel="stylesheet" type="text/css" href="css/screen.css" />
 	<script type="text/javascript" src="lib/angular/angular.min.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/api.js"></script>
+	<script type="text/javascript" src="js/webapp.js"></script>
 </head>
-<body>
-	Hello, world!
+<body data-ng-controller="main">
+	<ul>
+		<li data-ng-repeat="item in items">
+			<button data-ng-click="finish(item.id)">Mark as Finished</button>
+			<span>{{item.entry}}</span>
+			<button data-ng-click="delete(item.id)">Delete</button>
+		</li>
+	</ul>
+	<br />
+	<form data-ng-submit="add()"> 
+		<input data-ng-model="newItem.entry" type="text" />
+		<input type="submit" value="Add" />
+	</form>
 </body>
 </html>

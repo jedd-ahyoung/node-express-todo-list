@@ -1,5 +1,5 @@
 angular.module('todo-webapp', ['todo-api', 'ngAnimate'])
-	.controller('main', ['$scope', 'api', function ($scope, api) {
+	.controller('main', ['$scope', '$document', '$timeout', '$window', 'api', function ($scope, $document, $timeout, $window, api) {
 		var emptyItem = {
 			_id: null,
 			finished: false,
@@ -16,7 +16,10 @@ angular.module('todo-webapp', ['todo-api', 'ngAnimate'])
 				.success(function (result) {
 					$scope.items.push(result.data);
 					$scope.newItem = angular.copy(emptyItem);
-					console.log("Added!");
+					console.log("Added!", $document);
+					$timeout(function () {
+						$window.scrollTo(0, $document[0].body.scrollHeight);
+					}, 0);
 				})
 				.error(function (error) {
 					console.log("Oh dang.", error);

@@ -1,5 +1,5 @@
 angular.module('todo-webapp', ['todo-api', 'ngAnimate'])
-	.controller('main', ['$scope', '$document', '$timeout', '$window', 'api', function ($scope, $document, $timeout, $window, api) {
+	.controller('main', ['$scope', '$document', '$timeout', '$window', 'apiMock', function ($scope, $document, $timeout, $window, api) {
 		var emptyItem = {
 			_id: null,
 			finished: false,
@@ -60,6 +60,8 @@ angular.module('todo-webapp', ['todo-api', 'ngAnimate'])
 				$scope.items = result.data;
 			})
 			.error(function (error) {
-				console.log("Uh-oh.", error);
+				// Data didn't load. For now, temporarily make items empty in memory.
+				$scope.items = [];
+				console.log("Error loading items from db: ", error);
 			});
 	}]);

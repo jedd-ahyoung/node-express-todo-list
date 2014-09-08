@@ -23,33 +23,44 @@ angular.module('todo-api', [])
 		}
 
 		var nextid = 5;
+		var fail = true;
 
 		var getItems = function () {
 			var deferred = $q.defer();
-			deferred.resolve({
-				data: [
-					{ _id: 1, entry: "One", archived: false, finished: true }
-					, { _id: 2, entry: "Two", archived: false, finished: true }
-					, { _id: 3, entry: "Three", archived: false, finished: false }
-					, { _id: 4, entry: "Four", archived: false, finished: false }
-				]
-			});
+
+			if (fail) {
+				deferred.reject();
+			} else {
+				deferred.resolve({
+					data: [
+						{ _id: 1, entry: "One", archived: false, finished: true }
+						, { _id: 2, entry: "Two", archived: false, finished: true }
+						, { _id: 3, entry: "Three", archived: false, finished: false }
+						, { _id: 4, entry: "Four", archived: false, finished: false }
+					]
+				});
+			}
 
 			return addHttpMethods(deferred.promise);
 		};
 
 		var createItem = function (item) {
 			var deferred = $q.defer();
-			deferred.resolve({
-				data: {
-					_id: nextid,
-					entry: item.entry,
-					archived: false,
-					finished: false,
-					created: new Date(),
-					updated: new Date()
-				}
-			});
+
+			if (fail) {
+				deferred.reject();
+			} else {
+				deferred.resolve({
+					data: {
+						_id: nextid,
+						entry: item.entry,
+						archived: false,
+						finished: false,
+						created: new Date(),
+						updated: new Date()
+					}
+				});
+			}
 
 			nextid++;
 
@@ -58,18 +69,26 @@ angular.module('todo-api', [])
 
 		var updateItem = function (item) {
 			var deferred = $q.defer();
-			deferred.resolve({
-				data: item
-			});
+			if (fail) {
+				deferred.reject();
+			} else {
+				deferred.resolve({
+					data: item
+				});
+			}
 
 			return addHttpMethods(deferred.promise);
 		};
 
 		var deleteItem = function (id) {
 			var deferred = $q.defer();
-			deferred.resolve({
-				data: id
-			});
+			if (fail) {
+				deferred.reject();
+			} else {
+				deferred.resolve({
+					data: id
+				});
+			}
 
 			return addHttpMethods(deferred.promise);
 		};

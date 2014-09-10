@@ -1,4 +1,4 @@
-angular.module('todo-webapp', ['todo-api', 'ngAnimate'])
+angular.module('todo-webapp', ['todo-api', 'ngAnimate', 'ngStorage'])
 	.controller('main', ['$scope', '$document', '$timeout', '$window', 'apiMock', function ($scope, $document, $timeout, $window, api) {
 		var emptyItem = {
 			_id: null,

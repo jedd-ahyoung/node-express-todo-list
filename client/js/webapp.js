@@ -1,5 +1,5 @@
 angular.module('todo-webapp', ['todo-api', 'ngAnimate', 'ngStorage'])
-	.controller('main', ['$scope', '$document', '$timeout', '$window', 'apiMock', function ($scope, $document, $timeout, $window, api) {
+	.controller('main', ['$scope', '$document', '$timeout', '$localStorage', '$window', 'api', function ($scope, $document, $timeout, $localStorage, $window, api) {
 		var emptyItem = {
 			_id: null,
 			finished: false,
@@ -53,11 +53,30 @@ angular.module('todo-webapp', ['todo-api', 'ngAnimate', 'ngStorage'])
 				.error(function (error) {
 					console.log("Oh dang.", error);
 				});
-		}
+		};
+
+		/* Do stuff with localstorage. */
+
+		// First, load the items from localstorage into our array, if it exists.
+		$localStorage.items = $localStorage.items || {};
+		$scope.items = [];
 
 		api.getItems()
 			.success(function (result) {
-				$scope.items = result.data;
+				// Add the items into our localstorage hash. TODO: Wrap this in a service.
+				result.data.forEach(function (value) {
+					// Here, merge the items. If new value has greater updated date, overwrite.
+					if (!$localStorage.items[value._id] ||
+						$localStorage.items[value._id].updated < value.updated) 
+					{
+						$localStorage.items[value._id] = value;
+					}
+				});
+
+				// Temporary workaround for sorting issue. Sort by create date. TODO: Wrap this in a service.
+				Object.keys($localStorage.items).forEach(function (value) {
+					$scope.items.push($localStorage.items[value]);
+				});
 			})
 			.error(function (error) {
 				// Data didn't load. For now, temporarily make items empty in memory.
